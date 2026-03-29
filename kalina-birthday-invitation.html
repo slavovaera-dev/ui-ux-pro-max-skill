@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Рожден ден на Калина 🎂</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --pink:    #FF6EB4;
+      --purple:  #A855F7;
+      --yellow:  #FBBF24;
+      --orange:  #F97316;
+      --teal:    #06B6D4;
+      --green:   #22C55E;
+      --bg:      #FFF5FB;
+      --text:    #1E1B4B;
+      --card-bg: #FFFFFF;
+      --radius:  24px;
+      --shadow:  4px 6px 0px rgba(0,0,0,0.15);
+      --shadow-lg: 6px 8px 0px rgba(0,0,0,0.18);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33%       { transform: translateY(-12px) rotate(3deg); }
+      66%       { transform: translateY(-6px) rotate(-2deg); }
+    }
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-4deg); }
+      50%       { transform: rotate(4deg); }
+    }
+    @keyframes pop-in {
+      0%   { transform: scale(0.5) translateY(30px); opacity: 0; }
+      70%  { transform: scale(1.08) translateY(-4px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes bounce-in {
+      0%   { transform: scale(0); opacity: 0; }
+      60%  { transform: scale(1.15); opacity: 1; }
+      80%  { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+    @keyframes confetti-fall {
+      0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+    @keyframes star-spin {
+      0%   { transform: rotate(0deg) scale(1); }
+      50%  { transform: rotate(180deg) scale(1.2); }
+      100% { transform: rotate(360deg) scale(1); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(255,110,180,0.4); }
+      50%       { box-shadow: var(--shadow-lg), 0 0 0 16px rgba(255,110,180,0); }
+    }
+    @keyframes rainbow-text {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 15% 15%, rgba(255,110,180,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 85% 85%, rgba(168,85,247,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 70%);
+      min-height: 100vh;
+      color: var(--text);
+      overflow-x: hidden;
+      padding: 16px;
+    }
+
+    /* ── Confetti particles ── */
+    .confetti-wrap {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .confetti-piece {
+      position: absolute;
+      top: -20px;
+      width: 10px; height: 10px;
+      border-radius: 2px;
+      animation: confetti-fall linear infinite;
+    }
+
+    /* ── Main card ── */
+    .invitation-card {
+      max-width: 560px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      animation: pop-in 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+
+    /* ── Hero section ── */
+    .hero {
+      background: linear-gradient(145deg, #FF6EB4 0%, #D946EF 50%, #A855F7 100%);
+      border-radius: var(--radius) var(--radius) 0 0;
+      border: 3px solid var(--text);
+      border-bottom: none;
+      padding: 40px 32px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .floating-decorations {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .deco {
+      position: absolute;
+      font-size: 28px;
+      animation: float 3s ease-in-out infinite;
+      filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.2));
+    }
+    .deco:nth-child(1) { top: 12%; left: 8%;  animation-delay: 0s;    font-size: 32px; }
+    .deco:nth-child(2) { top: 8%;  right: 10%; animation-delay: 0.5s;  font-size: 26px; }
+    .deco:nth-child(3) { top: 55%; left: 5%;  animation-delay: 1s;    font-size: 22px; }
+    .deco:nth-child(4) { top: 65%; right: 6%; animation-delay: 1.5s;  font-size: 30px; }
+    .deco:nth-child(5) { top: 30%; right: 4%; animation-delay: 0.8s;  font-size: 20px; }
+    .deco:nth-child(6) { top: 40%; left: 3%;  animation-delay: 1.2s;  font-size: 24px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      border: 2px solid rgba(255,255,255,0.6);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-cake {
+      font-size: 80px;
+      display: block;
+      margin: 0 auto 16px;
+      animation: float 2.5s ease-in-out infinite;
+      filter: drop-shadow(4px 6px 0 rgba(0,0,0,0.2));
+      line-height: 1;
+    }
+
+    .hero-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(42px, 12vw, 64px);
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      text-shadow: 3px 4px 0 rgba(0,0,0,0.2);
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(18px, 5vw, 24px);
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      text-shadow: 1px 2px 0 rgba(0,0,0,0.15);
+      margin-bottom: 24px;
+    }
+
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px; height: 80px;
+      background: var(--yellow);
+      border: 3px solid var(--text);
+      border-radius: 50%;
+      box-shadow: var(--shadow-lg);
+      font-family: 'Fredoka', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0 auto;
+      animation: wiggle 2s ease-in-out infinite;
+    }
+
+    /* ── Wave divider ── */
+    .wave-divider {
+      height: 40px;
+      background: linear-gradient(145deg, #FF6EB4 0%, #D946EF 50%, #A855F7 100%);
+      position: relative;
+      margin-top: -2px;
+    }
+    .wave-divider svg {
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+
+    /* ── Details section ── */
+    .details-section {
+      background: var(--card-bg);
+      border: 3px solid var(--text);
+      border-top: none;
+      padding: 8px 24px 32px;
+    }
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .detail-card {
+      background: var(--card-bg);
+      border: 3px solid var(--text);
+      border-radius: var(--radius);
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .detail-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    .detail-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .detail-card.pink   { background: #FFF0F8; }
+    .detail-card.yellow { background: #FFFBEB; }
+    .detail-card.teal   { background: #F0FFFE; }
+    .detail-card.purple { background: #F5F0FF; }
+
+    .detail-icon {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 8px;
+      animation: float 3s ease-in-out infinite;
+    }
+    .detail-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #6B7280;
+      margin-bottom: 4px;
+    }
+    .detail-value {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(16px, 4vw, 20px);
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .detail-value small {
+      display: block;
+      font-family: 'Nunito', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #6B7280;
+      margin-top: 2px;
+    }
+
+    /* ── Venue highlight ── */
+    .venue-highlight {
+      background: linear-gradient(135deg, #E0F2FE 0%, #F0E6FF 100%);
+      border: 3px solid var(--text);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-lg);
+      text-align: center;
+    }
+    .venue-name {
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(22px, 6vw, 28px);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .venue-sub {
+      font-size: 14px;
+      color: #6B7280;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .venue-features {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .venue-chip {
+      background: white;
+      border: 2px solid var(--text);
+      border-radius: 100px;
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.12);
+    }
+
+    /* ── Message / RSVP section ── */
+    .message-section {
+      background: linear-gradient(135deg, #FFF9F0, #FFF0F8);
+      border: 3px solid var(--text);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+    .message-section p {
+      font-size: clamp(15px, 3.5vw, 17px);
+      line-height: 1.7;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .message-section .highlight {
+      color: var(--pink);
+      font-weight: 800;
+    }
+
+    /* ── CTA Button ── */
+    .cta-section {
+      text-align: center;
+      padding: 0 8px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--orange), #FF6EB4);
+      color: white;
+      font-family: 'Fredoka', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 18px 40px;
+      border-radius: 100px;
+      border: 3px solid var(--text);
+      box-shadow: var(--shadow-lg);
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pulse-glow 2.5s ease-in-out infinite;
+      letter-spacing: 0.5px;
+      width: 100%;
+      max-width: 340px;
+    }
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: var(--shadow-lg), 0 0 0 6px rgba(255,110,180,0.2);
+    }
+    .cta-btn:active {
+      transform: translateY(1px) scale(0.98);
+    }
+    .cta-hint {
+      font-size: 12px;
+      color: #9CA3AF;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    /* ── Balloon footer ── */
+    .footer-section {
+      background: var(--card-bg);
+      border: 3px solid var(--text);
+      border-top: none;
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 20px 24px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+    .balloon {
+      font-size: 28px;
+      animation: float 2.2s ease-in-out infinite;
+    }
+    .balloon:nth-child(2) { animation-delay: 0.4s; }
+    .balloon:nth-child(3) { animation-delay: 0.8s; }
+    .footer-text {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    /* ── Stars decoration ── */
+    .stars-row {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 0 8px;
+    }
+    .star {
+      font-size: 20px;
+      animation: star-spin 4s linear infinite;
+    }
+    .star:nth-child(2) { animation-delay: 0.6s; font-size: 16px; }
+    .star:nth-child(3) { animation-delay: 1.2s; font-size: 24px; }
+    .star:nth-child(4) { animation-delay: 0.3s; font-size: 14px; }
+    .star:nth-child(5) { animation-delay: 1.8s; font-size: 18px; }
+
+    /* ── Separator ── */
+    .separator {
+      border: none;
+      border-top: 2px dashed rgba(0,0,0,0.1);
+      margin: 20px 0;
+    }
+
+    @media (max-width: 380px) {
+      body { padding: 12px 8px; }
+      .hero { padding: 28px 20px 44px; }
+      .details-section { padding: 8px 16px 24px; }
+      .detail-card { padding: 16px 12px; }
+      .details-grid { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Confetti background -->
+  <div class="confetti-wrap" aria-hidden="true" id="confetti"></div>
+
+  <main class="invitation-card" role="main">
+
+    <!-- ── Hero ── -->
+    <section class="hero" aria-label="Заглавие на поканата">
+      <div class="floating-decorations" aria-hidden="true">
+        <span class="deco">🌸</span>
+        <span class="deco">⭐</span>
+        <span class="deco">🦋</span>
+        <span class="deco">🌈</span>
+        <span class="deco">✨</span>
+        <span class="deco">💫</span>
+      </div>
+
+      <div class="hero-badge">Ти си поканен/а!</div>
+
+      <span class="hero-cake" role="img" aria-label="торта">🎂</span>
+
+      <h1 class="hero-title">Калина</h1>
+      <p class="hero-subtitle">празнува рожден ден!</p>
+
+      <div class="age-badge" role="img" aria-label="рожден ден">🎉</div>
+    </section>
+
+    <!-- Wave -->
+    <div class="wave-divider" aria-hidden="true">
+      <svg viewBox="0 0 560 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 C140,40 420,40 560,0 L560,40 L0,40 Z" fill="white"/>
+      </svg>
+    </div>
+
+    <!-- ── Details ── -->
+    <section class="details-section" aria-label="Детайли на събитието">
+
+      <div class="stars-row" aria-hidden="true">
+        <span class="star">⭐</span>
+        <span class="star">🌟</span>
+        <span class="star">✨</span>
+        <span class="star">💛</span>
+        <span class="star">⭐</span>
+      </div>
+
+      <div class="details-grid">
+        <!-- Date -->
+        <div class="detail-card pink" role="group" aria-label="Дата">
+          <span class="detail-icon" role="img" aria-label="календар">📅</span>
+          <div class="detail-label">Дата</div>
+          <div class="detail-value">9 Април<small>Сряда</small></div>
+        </div>
+
+        <!-- Time -->
+        <div class="detail-card yellow" role="group" aria-label="Час">
+          <span class="detail-icon" role="img" aria-label="часовник" style="animation-delay:0.7s">⏰</span>
+          <div class="detail-label">Начало</div>
+          <div class="detail-value">17:30 ч.<small>Не закъсняй!</small></div>
+        </div>
+      </div>
+
+      <!-- Venue -->
+      <div class="venue-highlight" aria-label="Място на събитието">
+        <span style="font-size:48px; display:block; margin-bottom:10px; animation: float 2.8s ease-in-out infinite;" role="img" aria-label="Плейленд">🎠</span>
+        <div class="venue-name">Плейленд</div>
+        <div class="venue-sub">Детски Развлекателен Център • Хасково</div>
+        <div class="venue-features">
+          <span class="venue-chip">🛝 Пързалки</span>
+          <span class="venue-chip">🎪 Игри</span>
+          <span class="venue-chip">🎈 Забавления</span>
+          <span class="venue-chip">🍰 Торта</span>
+        </div>
+      </div>
+
+      <hr class="separator" aria-hidden="true" />
+
+      <!-- Message -->
+      <div class="message-section" aria-label="Съобщение">
+        <p>
+          Елате да отпразнуваме заедно
+          <span class="highlight">рождения ден на Калина!</span>
+          Очакват ни много игри, смях и незабравими моменти! 🥳
+        </p>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <a href="tel:" class="cta-btn" aria-label="Потвърди присъствие">
+          ✅ Ще дойда!
+        </a>
+        <p class="cta-hint">Моля потвърди присъствието си предварително</p>
+      </div>
+
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="footer-section" aria-label="Подпис">
+      <span class="balloon" role="img" aria-label="балон">🎈</span>
+      <span class="footer-text">Ще се видим на 9 Април! 🎊</span>
+      <span class="balloon" role="img" aria-label="балон">🎈</span>
+    </footer>
+
+  </main>
+
+  <script>
+    // Generate confetti pieces
+    const confettiWrap = document.getElementById('confetti');
+    const colors = ['#FF6EB4','#A855F7','#FBBF24','#F97316','#06B6D4','#22C55E','#EF4444','#3B82F6'];
+    const shapes = ['2px','4px','6px'];
+
+    for (let i = 0; i < 40; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const size = shapes[Math.floor(Math.random() * shapes.length)];
+      piece.style.cssText = `
+        left: ${Math.random() * 100}%;
+        width: ${size}; height: ${parseInt(size) * 2}px;
+        background: ${color};
+        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+        animation-duration: ${4 + Math.random() * 6}s;
+        animation-delay: ${Math.random() * 8}s;
+        opacity: ${0.6 + Math.random() * 0.4};
+      `;
+      confettiWrap.appendChild(piece);
+    }
+  </script>
+
+</body>
+</html>
