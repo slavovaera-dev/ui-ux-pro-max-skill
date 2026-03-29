@@ -8,11 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
       --pink:    #FF6EB4;
@@ -30,28 +26,18 @@
     }
 
     @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      33%       { transform: translateY(-12px) rotate(3deg); }
-      66%       { transform: translateY(-6px) rotate(-2deg); }
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      33%      { transform: translateY(-12px) rotate(3deg); }
+      66%      { transform: translateY(-6px) rotate(-2deg); }
     }
     @keyframes wiggle {
-      0%, 100% { transform: rotate(-4deg); }
-      50%       { transform: rotate(4deg); }
+      0%,100% { transform: rotate(-4deg); }
+      50%      { transform: rotate(4deg); }
     }
     @keyframes pop-in {
       0%   { transform: scale(0.5) translateY(30px); opacity: 0; }
       70%  { transform: scale(1.08) translateY(-4px); opacity: 1; }
       100% { transform: scale(1) translateY(0); opacity: 1; }
-    }
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position: 200% center; }
-    }
-    @keyframes bounce-in {
-      0%   { transform: scale(0); opacity: 0; }
-      60%  { transform: scale(1.15); opacity: 1; }
-      80%  { transform: scale(0.95); }
-      100% { transform: scale(1); }
     }
     @keyframes confetti-fall {
       0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
@@ -63,20 +49,20 @@
       100% { transform: rotate(360deg) scale(1); }
     }
     @keyframes pulse-glow {
-      0%, 100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(255,110,180,0.4); }
-      50%       { box-shadow: var(--shadow-lg), 0 0 0 16px rgba(255,110,180,0); }
+      0%,100% { box-shadow: var(--shadow-lg), 0 0 0 0 rgba(255,110,180,0.4); }
+      50%      { box-shadow: var(--shadow-lg), 0 0 0 16px rgba(255,110,180,0); }
     }
-    @keyframes rainbow-text {
-      0%   { background-position: 0% 50%; }
-      50%  { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    @keyframes modal-in {
+      0%   { transform: scale(0.8) translateY(20px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    @keyframes slide-up {
+      0%   { transform: translateY(10px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
 
     body {
@@ -84,447 +70,243 @@
       background-color: var(--bg);
       background-image:
         radial-gradient(circle at 15% 15%, rgba(255,110,180,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 85% 85%, rgba(168,85,247,0.12) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(6,182,212,0.07) 0%, transparent 70%);
+        radial-gradient(circle at 85% 85%, rgba(168,85,247,0.12) 0%, transparent 50%);
       min-height: 100vh;
       color: var(--text);
       overflow-x: hidden;
       padding: 16px;
     }
 
-    /* ── Confetti particles ── */
-    .confetti-wrap {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .confetti-piece {
-      position: absolute;
-      top: -20px;
-      width: 10px; height: 10px;
-      border-radius: 2px;
-      animation: confetti-fall linear infinite;
-    }
+    /* ── Confetti ── */
+    .confetti-wrap { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .confetti-piece { position: absolute; top: -20px; border-radius: 2px; animation: confetti-fall linear infinite; }
 
-    /* ── Main card ── */
-    .invitation-card {
-      max-width: 560px;
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-      animation: pop-in 0.7s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
+    /* ── Card ── */
+    .invitation-card { max-width: 560px; margin: 0 auto; position: relative; z-index: 1; animation: pop-in 0.7s cubic-bezier(0.34,1.56,0.64,1) both; }
 
-    /* ── Hero section ── */
+    /* ── Hero ── */
     .hero {
       background: linear-gradient(145deg, #FF6EB4 0%, #D946EF 50%, #A855F7 100%);
       border-radius: var(--radius) var(--radius) 0 0;
-      border: 3px solid var(--text);
-      border-bottom: none;
-      padding: 40px 32px 56px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      border: 3px solid var(--text); border-bottom: none;
+      padding: 40px 32px 56px; text-align: center; position: relative; overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 200px; height: 200px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 50%;
-    }
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -60px; left: -60px;
-      width: 220px; height: 220px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 50%;
-    }
+    .hero::before { content:''; position:absolute; top:-40px; right:-40px; width:200px; height:200px; background:rgba(255,255,255,0.1); border-radius:50%; }
+    .hero::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:220px; height:220px; background:rgba(255,255,255,0.08); border-radius:50%; }
 
-    .floating-decorations {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-    .deco {
-      position: absolute;
-      font-size: 28px;
-      animation: float 3s ease-in-out infinite;
-      filter: drop-shadow(2px 3px 0 rgba(0,0,0,0.2));
-    }
-    .deco:nth-child(1) { top: 12%; left: 8%;  animation-delay: 0s;    font-size: 32px; }
-    .deco:nth-child(2) { top: 8%;  right: 10%; animation-delay: 0.5s;  font-size: 26px; }
-    .deco:nth-child(3) { top: 55%; left: 5%;  animation-delay: 1s;    font-size: 22px; }
-    .deco:nth-child(4) { top: 65%; right: 6%; animation-delay: 1.5s;  font-size: 30px; }
-    .deco:nth-child(5) { top: 30%; right: 4%; animation-delay: 0.8s;  font-size: 20px; }
-    .deco:nth-child(6) { top: 40%; left: 3%;  animation-delay: 1.2s;  font-size: 24px; }
+    .floating-decorations { position:absolute; inset:0; pointer-events:none; }
+    .deco { position:absolute; font-size:28px; animation:float 3s ease-in-out infinite; filter:drop-shadow(2px 3px 0 rgba(0,0,0,0.2)); }
+    .deco:nth-child(1) { top:12%; left:8%;   animation-delay:0s;   font-size:32px; }
+    .deco:nth-child(2) { top:8%;  right:10%; animation-delay:0.5s; font-size:26px; }
+    .deco:nth-child(3) { top:55%; left:5%;   animation-delay:1s;   font-size:22px; }
+    .deco:nth-child(4) { top:65%; right:6%;  animation-delay:1.5s; font-size:30px; }
+    .deco:nth-child(5) { top:30%; right:4%;  animation-delay:0.8s; font-size:20px; }
+    .deco:nth-child(6) { top:40%; left:3%;   animation-delay:1.2s; font-size:24px; }
 
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.25);
-      border: 2px solid rgba(255,255,255,0.6);
-      color: white;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 100px;
-      margin-bottom: 20px;
-      backdrop-filter: blur(8px);
-    }
+    .hero-badge { display:inline-block; background:rgba(255,255,255,0.25); border:2px solid rgba(255,255,255,0.6); color:white; font-family:'Fredoka',sans-serif; font-size:13px; font-weight:600; letter-spacing:2px; text-transform:uppercase; padding:6px 18px; border-radius:100px; margin-bottom:20px; }
+    .hero-cake  { font-size:80px; display:block; margin:0 auto 16px; animation:float 2.5s ease-in-out infinite; filter:drop-shadow(4px 6px 0 rgba(0,0,0,0.2)); line-height:1; }
+    .hero-title { font-family:'Fredoka',sans-serif; font-size:clamp(42px,12vw,64px); font-weight:700; color:white; line-height:1; text-shadow:3px 4px 0 rgba(0,0,0,0.2); margin-bottom:8px; }
+    .hero-subtitle { font-family:'Fredoka',sans-serif; font-size:clamp(18px,5vw,24px); font-weight:500; color:rgba(255,255,255,0.9); margin-bottom:24px; }
+    .age-badge { display:inline-flex; align-items:center; justify-content:center; width:80px; height:80px; background:var(--yellow); border:3px solid var(--text); border-radius:50%; box-shadow:var(--shadow-lg); font-size:32px; margin:0 auto; animation:wiggle 2s ease-in-out infinite; }
 
-    .hero-cake {
-      font-size: 80px;
-      display: block;
-      margin: 0 auto 16px;
-      animation: float 2.5s ease-in-out infinite;
-      filter: drop-shadow(4px 6px 0 rgba(0,0,0,0.2));
-      line-height: 1;
-    }
-
-    .hero-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(42px, 12vw, 64px);
-      font-weight: 700;
-      color: white;
-      line-height: 1;
-      text-shadow: 3px 4px 0 rgba(0,0,0,0.2);
-      margin-bottom: 8px;
-    }
-
-    .hero-subtitle {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(18px, 5vw, 24px);
-      font-weight: 500;
-      color: rgba(255,255,255,0.9);
-      text-shadow: 1px 2px 0 rgba(0,0,0,0.15);
-      margin-bottom: 24px;
-    }
-
-    .age-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 80px; height: 80px;
-      background: var(--yellow);
-      border: 3px solid var(--text);
-      border-radius: 50%;
-      box-shadow: var(--shadow-lg);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--text);
-      margin: 0 auto;
-      animation: wiggle 2s ease-in-out infinite;
-    }
-
-    /* ── Wave divider ── */
-    .wave-divider {
-      height: 40px;
-      background: linear-gradient(145deg, #FF6EB4 0%, #D946EF 50%, #A855F7 100%);
-      position: relative;
-      margin-top: -2px;
-    }
-    .wave-divider svg {
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 100%;
-    }
+    /* ── Wave ── */
+    .wave-divider { height:40px; background:linear-gradient(145deg,#FF6EB4 0%,#D946EF 50%,#A855F7 100%); position:relative; margin-top:-2px; }
+    .wave-divider svg { position:absolute; bottom:0; left:0; width:100%; height:100%; }
 
     /* ── Details section ── */
-    .details-section {
-      background: var(--card-bg);
-      border: 3px solid var(--text);
-      border-top: none;
-      padding: 8px 24px 32px;
-    }
+    .details-section { background:var(--card-bg); border:3px solid var(--text); border-top:none; padding:8px 24px 32px; }
 
-    .details-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
-    }
+    .stars-row { display:flex; justify-content:center; gap:8px; padding:16px 0 8px; }
+    .star { font-size:20px; animation:star-spin 4s linear infinite; }
+    .star:nth-child(2) { animation-delay:0.6s; font-size:16px; }
+    .star:nth-child(3) { animation-delay:1.2s; font-size:24px; }
+    .star:nth-child(4) { animation-delay:0.3s; font-size:14px; }
+    .star:nth-child(5) { animation-delay:1.8s; font-size:18px; }
 
-    .detail-card {
-      background: var(--card-bg);
-      border: 3px solid var(--text);
-      border-radius: var(--radius);
-      padding: 20px 16px;
-      text-align: center;
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .detail-card:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-    .detail-card.full-width {
-      grid-column: 1 / -1;
-    }
+    .details-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    .detail-card { border:3px solid var(--text); border-radius:var(--radius); padding:20px 16px; text-align:center; box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s; }
+    .detail-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+    .detail-card.pink   { background:#FFF0F8; }
+    .detail-card.yellow { background:#FFFBEB; }
+    .detail-icon  { font-size:36px; display:block; margin-bottom:8px; animation:float 3s ease-in-out infinite; }
+    .detail-label { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#6B7280; margin-bottom:4px; }
+    .detail-value { font-family:'Fredoka',sans-serif; font-size:clamp(16px,4vw,20px); font-weight:600; color:var(--text); line-height:1.3; }
+    .detail-value small { display:block; font-family:'Nunito',sans-serif; font-size:12px; font-weight:500; color:#6B7280; margin-top:2px; }
 
-    .detail-card.pink   { background: #FFF0F8; }
-    .detail-card.yellow { background: #FFFBEB; }
-    .detail-card.teal   { background: #F0FFFE; }
-    .detail-card.purple { background: #F5F0FF; }
+    /* ── Venue ── */
+    .venue-highlight { background:linear-gradient(135deg,#E0F2FE 0%,#F0E6FF 100%); border:3px solid var(--text); border-radius:var(--radius); padding:24px 20px; margin-bottom:20px; box-shadow:var(--shadow-lg); text-align:center; }
+    .venue-name    { font-family:'Fredoka',sans-serif; font-size:clamp(22px,6vw,28px); font-weight:700; color:var(--text); margin-bottom:4px; }
+    .venue-sub     { font-size:14px; color:#6B7280; font-weight:600; }
+    .venue-address { font-size:13px; color:#6B7280; font-weight:600; margin:8px 0 16px; display:flex; align-items:center; justify-content:center; gap:5px; }
+    .venue-features { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .venue-chip { background:white; border:2px solid var(--text); border-radius:100px; padding:5px 14px; font-size:12px; font-weight:700; color:var(--text); box-shadow:2px 2px 0 rgba(0,0,0,0.12); }
 
-    .detail-icon {
-      font-size: 36px;
-      display: block;
-      margin-bottom: 8px;
-      animation: float 3s ease-in-out infinite;
+    /* ── Activity photos ── */
+    .activities-title { font-family:'Fredoka',sans-serif; font-size:20px; font-weight:700; text-align:center; margin-bottom:14px; color:var(--text); }
+    .activities-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .activity-card {
+      border:3px solid var(--text); border-radius:20px; overflow:hidden;
+      box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s;
+      cursor:default;
     }
-    .detail-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: #6B7280;
-      margin-bottom: 4px;
+    .activity-card:hover { transform:translateY(-4px) scale(1.02); box-shadow:var(--shadow-lg); }
+    .activity-visual {
+      height:110px; display:flex; align-items:center; justify-content:center;
+      font-size:56px; position:relative; overflow:hidden;
     }
-    .detail-value {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(16px, 4vw, 20px);
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.3;
+    .activity-visual::before {
+      content:''; position:absolute; inset:0;
+      background: inherit; filter:blur(0); z-index:0;
     }
-    .detail-value small {
-      display: block;
-      font-family: 'Nunito', sans-serif;
-      font-size: 12px;
-      font-weight: 500;
-      color: #6B7280;
-      margin-top: 2px;
-    }
+    .activity-visual span { position:relative; z-index:1; filter:drop-shadow(3px 4px 0 rgba(0,0,0,0.15)); animation:float 2.5s ease-in-out infinite; }
+    .activity-visual.slides  { background:linear-gradient(135deg,#FFDDE1,#FFB3C6); }
+    .activity-visual.balls   { background:linear-gradient(135deg,#D4F1FF,#A8DFFF); }
+    .activity-visual.games   { background:linear-gradient(135deg,#FFF3CD,#FFE082); }
+    .activity-visual.cake    { background:linear-gradient(135deg,#E8D5FF,#D4B0FF); }
+    .activity-visual span:nth-child(2) { font-size:32px; margin-left:-8px; animation-delay:0.4s; }
+    .activity-visual span:nth-child(3) { font-size:24px; margin-left:-6px; animation-delay:0.8s; }
+    .activity-label { background:white; padding:10px 12px; text-align:center; font-family:'Fredoka',sans-serif; font-size:15px; font-weight:600; color:var(--text); }
 
-    /* ── Venue highlight ── */
-    .venue-highlight {
-      background: linear-gradient(135deg, #E0F2FE 0%, #F0E6FF 100%);
-      border: 3px solid var(--text);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow-lg);
-      text-align: center;
-    }
-    .venue-name {
-      font-family: 'Fredoka', sans-serif;
-      font-size: clamp(22px, 6vw, 28px);
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .venue-sub {
-      font-size: 14px;
-      color: #6B7280;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
-    .venue-features {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .venue-chip {
-      background: white;
-      border: 2px solid var(--text);
-      border-radius: 100px;
-      padding: 5px 14px;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text);
-      box-shadow: 2px 2px 0 rgba(0,0,0,0.12);
-    }
+    /* ── Map ── */
+    .map-section { margin-bottom:20px; border:3px solid var(--text); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-lg); }
+    .map-section iframe { display:block; width:100%; height:200px; border:none; }
 
-    /* ── Message / RSVP section ── */
-    .message-section {
-      background: linear-gradient(135deg, #FFF9F0, #FFF0F8);
-      border: 3px solid var(--text);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-      text-align: center;
-    }
-    .message-section p {
-      font-size: clamp(15px, 3.5vw, 17px);
-      line-height: 1.7;
-      color: var(--text);
-      font-weight: 500;
-    }
-    .message-section .highlight {
-      color: var(--pink);
-      font-weight: 800;
-    }
+    /* ── Link buttons ── */
+    .link-buttons { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px; }
+    .link-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px 12px; border-radius:var(--radius); border:3px solid var(--text); font-family:'Fredoka',sans-serif; font-size:15px; font-weight:600; text-decoration:none; color:var(--text); box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s; cursor:pointer; }
+    .link-btn:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
+    .link-btn:active { transform:translateY(1px); }
+    .link-btn.fb   { background:#E8F0FE; }
+    .link-btn.maps { background:#E8F8F0; }
+    .link-btn-icon { font-size:20px; }
 
-    /* ── CTA Button ── */
-    .cta-section {
-      text-align: center;
-      padding: 0 8px;
-    }
+    /* ── Message ── */
+    .message-section { background:linear-gradient(135deg,#FFF9F0,#FFF0F8); border:3px solid var(--text); border-radius:var(--radius); padding:24px 20px; margin-bottom:20px; box-shadow:var(--shadow); text-align:center; }
+    .message-section p { font-size:clamp(15px,3.5vw,17px); line-height:1.7; color:var(--text); font-weight:500; }
+    .message-section .highlight { color:var(--pink); font-weight:800; }
+
+    /* ── CTA ── */
+    .cta-section { text-align:center; padding:0 8px; }
     .cta-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--orange), #FF6EB4);
-      color: white;
-      font-family: 'Fredoka', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 18px 40px;
-      border-radius: 100px;
-      border: 3px solid var(--text);
-      box-shadow: var(--shadow-lg);
-      text-decoration: none;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      animation: pulse-glow 2.5s ease-in-out infinite;
-      letter-spacing: 0.5px;
-      width: 100%;
-      max-width: 340px;
+      display:inline-block; background:linear-gradient(135deg,var(--orange),#FF6EB4);
+      color:white; font-family:'Fredoka',sans-serif; font-size:20px; font-weight:700;
+      padding:18px 40px; border-radius:100px; border:3px solid var(--text);
+      box-shadow:var(--shadow-lg); text-decoration:none; cursor:pointer;
+      transition:transform 0.2s,box-shadow 0.2s; animation:pulse-glow 2.5s ease-in-out infinite;
+      width:100%; max-width:340px;
     }
-    .cta-btn:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: var(--shadow-lg), 0 0 0 6px rgba(255,110,180,0.2);
-    }
-    .cta-btn:active {
-      transform: translateY(1px) scale(0.98);
-    }
-    .cta-hint {
-      font-size: 12px;
-      color: #9CA3AF;
-      margin-top: 10px;
-      font-weight: 500;
-    }
+    .cta-btn:hover  { transform:translateY(-3px) scale(1.02); }
+    .cta-btn:active { transform:translateY(1px) scale(0.98); }
+    .cta-hint { font-size:12px; color:#9CA3AF; margin-top:10px; font-weight:500; }
 
-    /* ── Balloon footer ── */
-    .footer-section {
-      background: var(--card-bg);
-      border: 3px solid var(--text);
-      border-top: none;
-      border-radius: 0 0 var(--radius) var(--radius);
-      padding: 20px 24px;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
+    /* ── RSVP Modal ── */
+    .modal-overlay {
+      position:fixed; inset:0; background:rgba(30,27,75,0.6);
+      backdrop-filter:blur(6px); z-index:100;
+      display:flex; align-items:center; justify-content:center;
+      padding:20px; opacity:0; pointer-events:none;
+      transition:opacity 0.25s ease;
     }
-    .balloon {
-      font-size: 28px;
-      animation: float 2.2s ease-in-out infinite;
-    }
-    .balloon:nth-child(2) { animation-delay: 0.4s; }
-    .balloon:nth-child(3) { animation-delay: 0.8s; }
-    .footer-text {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: var(--purple);
-    }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
 
-    /* ── Stars decoration ── */
-    .stars-row {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      padding: 16px 0 8px;
+    .modal-box {
+      background:white; border:3px solid var(--text); border-radius:28px;
+      padding:32px 28px; max-width:380px; width:100%;
+      box-shadow:8px 10px 0 rgba(0,0,0,0.2);
+      animation:modal-in 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+      text-align:center;
     }
-    .star {
-      font-size: 20px;
-      animation: star-spin 4s linear infinite;
-    }
-    .star:nth-child(2) { animation-delay: 0.6s; font-size: 16px; }
-    .star:nth-child(3) { animation-delay: 1.2s; font-size: 24px; }
-    .star:nth-child(4) { animation-delay: 0.3s; font-size: 14px; }
-    .star:nth-child(5) { animation-delay: 1.8s; font-size: 18px; }
+    .modal-icon  { font-size:60px; display:block; margin-bottom:12px; animation:float 2s ease-in-out infinite; }
+    .modal-title { font-family:'Fredoka',sans-serif; font-size:26px; font-weight:700; color:var(--text); margin-bottom:6px; }
+    .modal-sub   { font-size:14px; color:#6B7280; font-weight:500; margin-bottom:24px; }
 
-    /* ── Map embed ── */
-    .map-section {
-      margin-bottom: 20px;
-      border: 3px solid var(--text);
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
+    .modal-field { margin-bottom:16px; text-align:left; }
+    .modal-field label { display:block; font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:#6B7280; margin-bottom:6px; }
+    .modal-field input {
+      width:100%; padding:14px 16px; border:3px solid var(--text); border-radius:16px;
+      font-family:'Nunito',sans-serif; font-size:16px; font-weight:600; color:var(--text);
+      background:#FAFAFA; outline:none; transition:border-color 0.2s,box-shadow 0.2s;
     }
-    .map-section iframe {
-      display: block;
-      width: 100%;
-      height: 200px;
-      border: none;
-    }
+    .modal-field input:focus { border-color:var(--pink); box-shadow:0 0 0 4px rgba(255,110,180,0.15); background:white; }
+    .modal-field input::placeholder { color:#C4B5D0; font-weight:400; }
 
-    /* ── Link buttons row ── */
-    .link-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 20px;
+    .modal-submit {
+      width:100%; padding:16px; border-radius:100px; border:3px solid var(--text);
+      background:linear-gradient(135deg,#22C55E,#06B6D4);
+      color:white; font-family:'Fredoka',sans-serif; font-size:18px; font-weight:700;
+      cursor:pointer; box-shadow:var(--shadow-lg); transition:transform 0.2s,box-shadow 0.2s;
+      margin-top:8px;
     }
-    .link-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 14px 12px;
-      border-radius: var(--radius);
-      border: 3px solid var(--text);
-      font-family: 'Fredoka', sans-serif;
-      font-size: 15px;
-      font-weight: 600;
-      text-decoration: none;
-      color: var(--text);
-      box-shadow: var(--shadow);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      cursor: pointer;
-    }
-    .link-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
-    .link-btn:active { transform: translateY(1px); }
-    .link-btn.fb   { background: #E8F0FE; }
-    .link-btn.maps { background: #E8F8F0; }
-    .link-btn-icon { font-size: 20px; }
+    .modal-submit:hover  { transform:translateY(-2px); box-shadow:var(--shadow-lg); }
+    .modal-submit:active { transform:translateY(1px); }
+    .modal-cancel { display:block; margin-top:14px; font-size:13px; color:#9CA3AF; cursor:pointer; font-weight:600; background:none; border:none; font-family:'Nunito',sans-serif; }
+    .modal-cancel:hover { color:var(--text); }
 
-    .venue-address {
-      font-size: 13px;
-      color: #6B7280;
-      font-weight: 600;
-      margin: 8px 0 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
+    /* ── Success state ── */
+    .modal-success { display:none; animation:slide-up 0.4s ease both; }
+    .modal-success.show { display:block; }
+    .modal-form.hide { display:none; }
+    .success-icon  { font-size:72px; display:block; margin-bottom:16px; animation:float 2s ease-in-out infinite; }
+    .success-title { font-family:'Fredoka',sans-serif; font-size:28px; font-weight:700; color:var(--green); margin-bottom:8px; }
+    .success-text  { font-size:15px; color:#6B7280; font-weight:500; line-height:1.6; }
 
-    /* ── Separator ── */
-    .separator {
-      border: none;
-      border-top: 2px dashed rgba(0,0,0,0.1);
-      margin: 20px 0;
-    }
+    /* ── Footer ── */
+    .footer-section { background:var(--card-bg); border:3px solid var(--text); border-top:none; border-radius:0 0 var(--radius) var(--radius); padding:20px 24px; text-align:center; display:flex; align-items:center; justify-content:center; gap:12px; }
+    .balloon { font-size:28px; animation:float 2.2s ease-in-out infinite; }
+    .balloon:nth-child(2) { animation-delay:0.4s; }
+    .balloon:nth-child(3) { animation-delay:0.8s; }
+    .footer-text { font-family:'Fredoka',sans-serif; font-size:16px; font-weight:600; color:var(--purple); }
 
-    @media (max-width: 380px) {
-      body { padding: 12px 8px; }
-      .hero { padding: 28px 20px 44px; }
-      .details-section { padding: 8px 16px 24px; }
-      .detail-card { padding: 16px 12px; }
-      .details-grid { gap: 12px; }
+    .separator { border:none; border-top:2px dashed rgba(0,0,0,0.1); margin:20px 0; }
+
+    @media (max-width:380px) {
+      body { padding:12px 8px; }
+      .hero { padding:28px 20px 44px; }
+      .details-section { padding:8px 16px 24px; }
+      .detail-card { padding:16px 12px; }
+      .details-grid, .activities-grid { gap:10px; }
+      .activity-visual { height:90px; font-size:44px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Confetti background -->
   <div class="confetti-wrap" aria-hidden="true" id="confetti"></div>
+
+  <!-- ── RSVP Modal ── -->
+  <div class="modal-overlay" id="rsvpModal" role="dialog" aria-modal="true" aria-label="Потвърди присъствие">
+    <div class="modal-box">
+
+      <!-- Form state -->
+      <div class="modal-form" id="modalForm">
+        <span class="modal-icon">🎉</span>
+        <h2 class="modal-title">Ще дойдем!</h2>
+        <p class="modal-sub">Кажи ни как се казва детето, за да ви чакаме 🥳</p>
+
+        <div class="modal-field">
+          <label for="childName">Ime на детето</label>
+          <input type="text" id="childName" placeholder="напр. Мартина" autocomplete="off" />
+        </div>
+        <div class="modal-field">
+          <label for="parentName">Tvoe ime (по желание)</label>
+          <input type="text" id="parentName" placeholder="напр. Ивана" autocomplete="off" />
+        </div>
+
+        <button class="modal-submit" id="sendRsvp">
+          📲 Изпрати потвърждение
+        </button>
+        <button class="modal-cancel" id="closeModal">Отказ</button>
+      </div>
+
+      <!-- Success state -->
+      <div class="modal-success" id="modalSuccess">
+        <span class="success-icon">🎊</span>
+        <p class="success-title">Чудесно!</p>
+        <p class="success-text">Потвърждението ти е изпратено.<br>Очакваме ви на <strong>9 Април в 17:30 ч.</strong>!</p>
+      </div>
+
+    </div>
+  </div>
 
   <main class="invitation-card" role="main">
 
@@ -538,25 +320,19 @@
         <span class="deco">✨</span>
         <span class="deco">💫</span>
       </div>
-
       <div class="hero-badge">Ти си поканен/а!</div>
-
       <span class="hero-cake" role="img" aria-label="торта">🎂</span>
-
       <h1 class="hero-title">Калина</h1>
       <p class="hero-subtitle">празнува рожден ден!</p>
-
       <div class="age-badge" role="img" aria-label="рожден ден">🎉</div>
     </section>
 
-    <!-- Wave -->
     <div class="wave-divider" aria-hidden="true">
       <svg viewBox="0 0 560 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0,0 C140,40 420,40 560,0 L560,40 L0,40 Z" fill="white"/>
       </svg>
     </div>
 
-    <!-- ── Details ── -->
     <section class="details-section" aria-label="Детайли на събитието">
 
       <div class="stars-row" aria-hidden="true">
@@ -567,30 +343,26 @@
         <span class="star">⭐</span>
       </div>
 
+      <!-- Date & Time -->
       <div class="details-grid">
-        <!-- Date -->
-        <div class="detail-card pink" role="group" aria-label="Дата">
-          <span class="detail-icon" role="img" aria-label="календар">📅</span>
+        <div class="detail-card pink">
+          <span class="detail-icon">📅</span>
           <div class="detail-label">Дата</div>
           <div class="detail-value">9 Април<small>Сряда</small></div>
         </div>
-
-        <!-- Time -->
-        <div class="detail-card yellow" role="group" aria-label="Час">
-          <span class="detail-icon" role="img" aria-label="часовник" style="animation-delay:0.7s">⏰</span>
+        <div class="detail-card yellow">
+          <span class="detail-icon" style="animation-delay:0.7s">⏰</span>
           <div class="detail-label">Начало</div>
           <div class="detail-value">17:30 ч.<small>Не закъсняй!</small></div>
         </div>
       </div>
 
       <!-- Venue -->
-      <div class="venue-highlight" aria-label="Място на събитието">
-        <span style="font-size:48px; display:block; margin-bottom:10px; animation: float 2.8s ease-in-out infinite;" role="img" aria-label="Плейленд">🎠</span>
+      <div class="venue-highlight">
+        <span style="font-size:48px;display:block;margin-bottom:10px;animation:float 2.8s ease-in-out infinite;">🎠</span>
         <div class="venue-name">Плейленд</div>
         <div class="venue-sub">Детски Развлекателен Център • Хасково</div>
-        <div class="venue-address">
-          <span>📍</span> ул. „Банска" 59, ж.к. Бадема, Хасково
-        </div>
+        <div class="venue-address">📍 ул. „Банска" 59, ж.к. Бадема, Хасково</div>
         <div class="venue-features">
           <span class="venue-chip">🛝 Пързалки</span>
           <span class="venue-chip">🎪 Игри</span>
@@ -599,13 +371,40 @@
         </div>
       </div>
 
+      <!-- Activity illustrations -->
+      <p class="activities-title">Какво ни чака? 🤩</p>
+      <div class="activities-grid" aria-label="Атракции">
+        <div class="activity-card">
+          <div class="activity-visual slides">
+            <span>🛝</span><span>🎢</span><span>⛷️</span>
+          </div>
+          <div class="activity-label">Пързалки</div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-visual balls">
+            <span>⚽</span><span>🔵</span><span>🟡</span>
+          </div>
+          <div class="activity-label">Топки &amp; Басейн</div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-visual games">
+            <span>🎠</span><span>🎡</span><span>🎪</span>
+          </div>
+          <div class="activity-label">Игри &amp; Атракции</div>
+        </div>
+        <div class="activity-card">
+          <div class="activity-visual cake">
+            <span>🎂</span><span>🧁</span><span>🎁</span>
+          </div>
+          <div class="activity-label">Торта &amp; Изненади</div>
+        </div>
+      </div>
+
       <!-- Map -->
-      <div class="map-section" aria-label="Карта с местоположение">
+      <div class="map-section">
         <iframe
           src="https://maps.google.com/maps?q=%D1%83%D0%BB.+%D0%91%D0%B0%D0%BD%D1%81%D0%BA%D0%B0+59,+%D0%B6.%D0%BA.+%D0%91%D0%B0%D0%B4%D0%B5%D0%BC%D0%B0,+%D0%A5%D0%B0%D1%81%D0%BA%D0%BE%D0%B2%D0%BE,+%D0%91%D1%8A%D0%BB%D0%B3%D0%B0%D1%80%D0%B8%D1%8F&output=embed&z=16"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
           title="Местоположение на Плейленд, Хасково">
         </iframe>
       </div>
@@ -613,23 +412,19 @@
       <!-- Links -->
       <div class="link-buttons">
         <a href="https://www.facebook.com/p/%D0%94%D0%B5%D1%82%D1%81%D0%BA%D0%B8-%D1%86%D0%B5%D0%BD%D1%82%D1%8A%D1%80-PlayLand-61573496690913/"
-           target="_blank" rel="noopener noreferrer"
-           class="link-btn fb"
-           aria-label="Facebook страница на Плейленд">
+           target="_blank" rel="noopener noreferrer" class="link-btn fb">
           <span class="link-btn-icon">📘</span> Facebook
         </a>
         <a href="https://maps.google.com/?q=%D1%83%D0%BB.+%D0%91%D0%B0%D0%BD%D1%81%D0%BA%D0%B0+59+%D0%A5%D0%B0%D1%81%D0%BA%D0%BE%D0%B2%D0%BE"
-           target="_blank" rel="noopener noreferrer"
-           class="link-btn maps"
-           aria-label="Отвори в Google Maps">
+           target="_blank" rel="noopener noreferrer" class="link-btn maps">
           <span class="link-btn-icon">🗺️</span> Карта
         </a>
       </div>
 
-      <hr class="separator" aria-hidden="true" />
+      <hr class="separator" />
 
       <!-- Message -->
-      <div class="message-section" aria-label="Съобщение">
+      <div class="message-section">
         <p>
           Елате да отпразнуваме заедно
           <span class="highlight">рождения ден на Калина!</span>
@@ -639,45 +434,81 @@
 
       <!-- CTA -->
       <div class="cta-section">
-        <a href="tel:0896136313" class="cta-btn" aria-label="Потвърди присъствие">
+        <button class="cta-btn" id="openRsvp" aria-haspopup="dialog">
           ✅ Ще дойда!
-        </a>
-        <p class="cta-hint">Моля потвърди присъствието си предварително</p>
+        </button>
+        <p class="cta-hint">Натисни за да потвърдиш присъствие</p>
       </div>
 
     </section>
 
-    <!-- ── Footer ── -->
-    <footer class="footer-section" aria-label="Подпис">
-      <span class="balloon" role="img" aria-label="балон">🎈</span>
+    <footer class="footer-section">
+      <span class="balloon">🎈</span>
       <span class="footer-text">Ще се видим на 9 Април! 🎊</span>
-      <span class="balloon" role="img" aria-label="балон">🎈</span>
+      <span class="balloon">🎈</span>
     </footer>
 
   </main>
 
   <script>
-    // Generate confetti pieces
-    const confettiWrap = document.getElementById('confetti');
+    // ── Confetti ──
+    const wrap = document.getElementById('confetti');
     const colors = ['#FF6EB4','#A855F7','#FBBF24','#F97316','#06B6D4','#22C55E','#EF4444','#3B82F6'];
-    const shapes = ['2px','4px','6px'];
-
     for (let i = 0; i < 40; i++) {
-      const piece = document.createElement('div');
-      piece.className = 'confetti-piece';
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      const size = shapes[Math.floor(Math.random() * shapes.length)];
-      piece.style.cssText = `
-        left: ${Math.random() * 100}%;
-        width: ${size}; height: ${parseInt(size) * 2}px;
-        background: ${color};
-        border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
-        animation-duration: ${4 + Math.random() * 6}s;
-        animation-delay: ${Math.random() * 8}s;
-        opacity: ${0.6 + Math.random() * 0.4};
-      `;
-      confettiWrap.appendChild(piece);
+      const p = document.createElement('div');
+      p.className = 'confetti-piece';
+      const s = [2,4,6][Math.floor(Math.random()*3)];
+      p.style.cssText = `left:${Math.random()*100}%;width:${s}px;height:${s*2}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*8}s;opacity:${0.6+Math.random()*0.4}`;
+      wrap.appendChild(p);
     }
+
+    // ── Modal ──
+    const modal   = document.getElementById('rsvpModal');
+    const form    = document.getElementById('modalForm');
+    const success = document.getElementById('modalSuccess');
+
+    document.getElementById('openRsvp').addEventListener('click', () => {
+      modal.classList.add('open');
+      document.getElementById('childName').focus();
+    });
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    function closeModal() {
+      modal.classList.remove('open');
+    }
+
+    document.getElementById('sendRsvp').addEventListener('click', () => {
+      const child  = document.getElementById('childName').value.trim();
+      const parent = document.getElementById('parentName').value.trim();
+
+      if (!child) {
+        document.getElementById('childName').focus();
+        document.getElementById('childName').style.borderColor = '#EF4444';
+        setTimeout(() => document.getElementById('childName').style.borderColor = '', 1500);
+        return;
+      }
+
+      // Build WhatsApp message
+      let msg = `🎉 Ще дойдем на рождения ден на Калина!\n👧 Детето се казва: ${child}`;
+      if (parent) msg += `\n👩 От: ${parent}`;
+      msg += `\n📅 9 Април, 17:30 ч.`;
+
+      const waUrl = `https://wa.me/359896136313?text=${encodeURIComponent(msg)}`;
+
+      // Show success
+      form.classList.add('hide');
+      success.classList.add('show');
+
+      // Open WhatsApp after short delay
+      setTimeout(() => { window.open(waUrl, '_blank'); }, 600);
+
+      // Auto-close modal after 3s
+      setTimeout(() => { closeModal(); }, 3000);
+    });
   </script>
 
 </body>
