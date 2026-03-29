@@ -473,7 +473,7 @@
         </div>
 
         <button class="modal-submit" id="sendRsvp">
-          📲 Изпрати потвърждение
+          💜 Изпрати в Viber
         </button>
         <button class="modal-cancel" id="closeModal">Отказ</button>
       </div>
@@ -482,7 +482,7 @@
       <div class="modal-success" id="modalSuccess">
         <span class="success-icon">🎊</span>
         <p class="success-title">Чудесно!</p>
-        <p class="success-text">Потвърждението ти е изпратено.<br>Очакваме ви на <strong>9 Април в 17:30 ч.</strong>!</p>
+        <p class="success-text">Viber се отваря сега!<br>Съобщението е копирано — просто го <strong>постави (paste)</strong> и прати. 💜<br><br>Очакваме ви на <strong>9 Април в 17:30 ч.</strong>!</p>
       </div>
 
     </div>
@@ -699,22 +699,27 @@
         return;
       }
 
-      // Build WhatsApp message
+      // Build Viber message
       let msg = `🎉 Ще дойдем на рождения ден на Калина!\n👧 Детето се казва: ${child}`;
       if (parent) msg += `\n👩 От: ${parent}`;
       msg += `\n📅 9 Април, 17:30 ч.`;
 
-      const waUrl = `https://wa.me/359896136313?text=${encodeURIComponent(msg)}`;
+      // Copy message to clipboard (Viber doesn't support pre-filled text via deep link)
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(msg).catch(() => {});
+      }
+
+      const viberUrl = `viber://chat?number=%2B359896136313`;
 
       // Show success
       form.classList.add('hide');
       success.classList.add('show');
 
-      // Open WhatsApp after short delay
-      setTimeout(() => { window.open(waUrl, '_blank'); }, 600);
+      // Open Viber after short delay
+      setTimeout(() => { window.location.href = viberUrl; }, 700);
 
-      // Auto-close modal after 3s
-      setTimeout(() => { closeModal(); }, 3000);
+      // Auto-close modal after 3.5s
+      setTimeout(() => { closeModal(); }, 3500);
     });
   </script>
 
